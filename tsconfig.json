@@ -32,6 +32,9 @@
     },
     "target": "ES2022",
   },
+  "files": [
+    "./collections/InquiryForm.ts"
+  ],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
