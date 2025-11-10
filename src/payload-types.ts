@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     'inquiry-forms': InquiryForm;
+    'website-content': WebsiteContent;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'inquiry-forms': InquiryFormsSelect<false> | InquiryFormsSelect<true>;
+    'website-content': WebsiteContentSelect<false> | WebsiteContentSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -178,6 +180,24 @@ export interface InquiryForm {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "website-content".
+ */
+export interface WebsiteContent {
+  id: string;
+  page: string;
+  content: {
+    title: string;
+    body: string;
+    image?: (string | null) | Media;
+    id?: string | null;
+    blockName?: string | null;
+    blockType: 'textSection';
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -211,6 +231,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'inquiry-forms';
         value: string | InquiryForm;
+      } | null)
+    | ({
+        relationTo: 'website-content';
+        value: string | WebsiteContent;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -306,6 +330,28 @@ export interface InquiryFormsSelect<T extends boolean = true> {
   phone?: T;
   subject?: T;
   message?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "website-content_select".
+ */
+export interface WebsiteContentSelect<T extends boolean = true> {
+  page?: T;
+  content?:
+    | T
+    | {
+        textSection?:
+          | T
+          | {
+              title?: T;
+              body?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
 }
