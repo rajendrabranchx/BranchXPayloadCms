@@ -185,14 +185,74 @@ export interface InquiryForm {
 export interface WebsiteContent {
   id: string;
   page: string;
-  content: {
-    title: string;
-    body: string;
-    image?: (string | null) | Media;
-    id?: string | null;
-    blockName?: string | null;
-    blockType: 'textSection';
-  }[];
+  /**
+   * Main content for the page
+   */
+  title?: string | null;
+  /**
+   * A brief description or subtitle for the page
+   */
+  pageSubtitle?: string | null;
+  /**
+   * Main content for the page
+   */
+  pageContent?: string | null;
+  /**
+   * Sub content for the page
+   */
+  pageSubContent?: string | null;
+  content: (
+    | {
+        title: string;
+        description?: string | null;
+        images?:
+          | {
+              image: string | Media;
+              caption?: string | null;
+              /**
+               * A description of the image for accessibility
+               */
+              altText?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'imageGallery';
+      }
+    | {
+        title: string;
+        /**
+         * A brief description or subtitle for the section
+         */
+        subtitle?: string | null;
+        body: string;
+        image?: (string | null) | Media;
+        /**
+         * Optional date for this section
+         */
+        date?: string | null;
+        link?: {
+          url?: string | null;
+          text?: string | null;
+        };
+        subsections?:
+          | {
+              title: string;
+              content: string;
+              image?: (string | null) | Media;
+              link?: {
+                url?: string | null;
+                text?: string | null;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'textSection';
+      }
+  )[];
   updatedAt: string;
   createdAt: string;
 }
@@ -339,15 +399,57 @@ export interface InquiryFormsSelect<T extends boolean = true> {
  */
 export interface WebsiteContentSelect<T extends boolean = true> {
   page?: T;
+  title?: T;
+  pageSubtitle?: T;
+  pageContent?: T;
+  pageSubContent?: T;
   content?:
     | T
     | {
+        imageGallery?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              images?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    altText?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         textSection?:
           | T
           | {
               title?: T;
+              subtitle?: T;
               body?: T;
               image?: T;
+              date?: T;
+              link?:
+                | T
+                | {
+                    url?: T;
+                    text?: T;
+                  };
+              subsections?:
+                | T
+                | {
+                    title?: T;
+                    content?: T;
+                    image?: T;
+                    link?:
+                      | T
+                      | {
+                          url?: T;
+                          text?: T;
+                        };
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

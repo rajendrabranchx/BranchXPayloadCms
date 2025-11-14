@@ -26,6 +26,9 @@
       "@/*": [
         "./src/*"
       ],
+      "payload/types": [
+        "./node_modules/payload/types"
+      ],
       "@payload-config": [
         "./src/payload.config.ts"
       ]
@@ -33,7 +36,7 @@
     "target": "ES2022",
   },
   "files": [
-    "./collections/InquiryForm.ts"
+    "./src/collections/InquiryForm.ts"
   ],
   "include": [
     "next-env.d.ts",
